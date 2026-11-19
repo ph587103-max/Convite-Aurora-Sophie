@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff0f7">
+<title>Convite — Aurora Sophie</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#fff0f7}
+body{display:flex;align-items:center;justify-content:center}
+.stage{position:relative;height:100vh;height:100svh;aspect-ratio:2/3;width:auto;flex:none;overflow:hidden}
+.art{display:block;width:100%;height:100%;object-fit:fill}
+.hotspot{position:absolute;display:block;border-radius:999px;outline:0;background:transparent;-webkit-tap-highlight-color:transparent;z-index:2}
+.whats{left:13.5%;top:74.2%;width:36%;height:7.5%}
+.maps{left:52.5%;top:74.2%;width:35%;height:7.5%}
+.countdown{position:absolute;z-index:3;left:14%;right:14%;top:91.2%;height:5.6%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2.2%;align-items:stretch;pointer-events:none}
+.unit{min-width:0;border:1px solid rgba(224,173,202,.58);border-radius:12px;background:rgba(255,255,255,.88);box-shadow:0 2px 8px rgba(139,77,127,.10);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#d879a9;line-height:1}
+.number{font-family:Georgia,serif;font-weight:700;font-size:clamp(13px,3.2vh,25px);font-variant-numeric:tabular-nums}
+.label{font-family:Arial,sans-serif;font-size:clamp(6px,1.05vh,9px);letter-spacing:.04em;color:#947b9c;margin-top:4px}
+.hotspot:focus-visible{outline:3px solid #7b4ca0;outline-offset:3px}
+@media (max-aspect-ratio:2/3){.stage{height:100svh;width:66.6667svh}}
+@media (max-height:600px){.countdown{top:91%;height:5.5%}.number{font-size:clamp(11px,3vh,19px)}.label{font-size:6px;margin-top:2px}}
+</style>
+</head>
+<body>
+<main class="stage" aria-label="Convite de aniversário de Aurora Sophie">
+<img class="art" src="arte-convite.png" alt="Convite de aniversário de um ano de Aurora Sophie, tema jardim encantado e borboletas. 20 de fevereiro de 2027 às 19 horas, no Aline Renata Fest, Rua Lúcio Pelegrino, 262, bairro São Francisco.">
+<a class="hotspot whats" href="https://wa.me/5535999901744?text=Ol%C3%A1!%20Gostaria%20de%20confirmar%20minha%20presen%C3%A7a%20no%20anivers%C3%A1rio%20de%201%20aninho%20da%20Aurora%20Sophie.%20%F0%9F%A6%8B" target="_blank" rel="noopener" aria-label="Confirmar presença pelo WhatsApp"></a>
+<a class="hotspot maps" href="https://www.google.com/maps/search/?api=1&query=Rua+L%C3%BAcio+Pelegrino%2C+262%2C+Bairro+S%C3%A3o+Francisco%2C+Aline+Renata+Fest" target="_blank" rel="noopener" aria-label="Abrir localização no Google Maps"></a>
+<section class="countdown" aria-label="Contagem regressiva para o aniversário">
+  <div class="unit"><span class="number" id="days">---</span><span class="label">DIAS</span></div>
+  <div class="unit"><span class="number" id="hours">--</span><span class="label">HORAS</span></div>
+  <div class="unit"><span class="number" id="minutes">--</span><span class="label">MIN</span></div>
+  <div class="unit"><span class="number" id="seconds">--</span><span class="label">SEG</span></div>
+</section>
+</main>
+<script>
+(() => {
+  const target = new Date('2027-02-20T19:00:00-03:00').getTime();
+  const fields = {
+    days: document.getElementById('days'),
+    hours: document.getElementById('hours'),
+    minutes: document.getElementById('minutes'),
+    seconds: document.getElementById('seconds')
+  };
+  const pad = n => String(n).padStart(2, '0');
+  function updateCountdown() {
+    let remaining = Math.max(0, target - Date.now());
+    const days = Math.floor(remaining / 86400000); remaining %= 86400000;
+    const hours = Math.floor(remaining / 3600000); remaining %= 3600000;
+    const minutes = Math.floor(remaining / 60000); remaining %= 60000;
+    const seconds = Math.floor(remaining / 1000);
+    fields.days.textContent = String(days);
+    fields.hours.textContent = pad(hours);
+    fields.minutes.textContent = pad(minutes);
+    fields.seconds.textContent = pad(seconds);
+    if (target <= Date.now()) {
+      document.querySelector('.countdown').setAttribute('aria-label', 'Chegou o dia da festa!');
+    }
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+})();
+</script>
+</body>
+</html>
